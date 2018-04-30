@@ -1,0 +1,88 @@
+
+<html>
+
+<head>
+  <title>Probleme 1 </title>
+  <meta http-equiv="Content-Type" content="text/html; charset="UTF-8">
+  <script type="text/javascript">
+var openingHours = {
+monday: [
+{ begin: "13:00", end: "16:00" }, 
+{ begin: "10:00", end: "12:00" },
+],
+tuesday: [
+{ begin: "13:00", end: "18:00" },
+{ begin: "10:00", end: "12:00" },
+
+],
+wednesday: [
+{ begin: "10:00", end: "12:00" },
+{ begin: "13:00", end: "18:00" },
+],
+thursday: [
+{ begin: "10:00", end: "12:00" },
+{ begin: "13:00", end: "18:00" },
+],
+friday: [],
+saturaday: [],
+sunday: [],
+};
+
+	
+function addHoursToSelectedDayes(days, hours){
+	
+	var jsonDays = JSON.parse(days);
+	var jsonHours = JSON.parse(hours);
+
+
+	 for( var i in openingHours){
+		if(jsonDays[i]){
+		var toAdd = true;
+
+		for( var j in openingHours[i]){
+			toAdd= parseFloat(openingHours[i][j].begin)<= parseFloat(jsonHours.begin) && parseFloat(openingHours[i][j].end)<= parseFloat(jsonHours.begin);
+		}
+		
+		if(toAdd){
+			openingHours[i].push({
+				"begin": jsonHours.begin,
+				"end": jsonHours.end
+			});
+		}
+			
+		}
+	 
+       openingHours[i].sort(function(a,b){  return parseFloat(a.begin) - parseFloat(b.begin)});
+	 }
+
+    
+ 
+	console.log(JSON.stringify(openingHours));
+	
+}
+function add(){
+var daysSelected = {
+monday: true,
+tuesday: true,
+wednesday: true,
+thursday: true,
+friday: false,
+saturday: false,
+sunday: false,
+};
+var  hoursToAdd = { begin: "19:00", end: "23:00"};
+addHoursToSelectedDayes(JSON.stringify(daysSelected), JSON.stringify(hoursToAdd));
+}
+
+
+  
+  </script>
+</head>
+<body>
+
+<h1> fonction simple</h1>
+
+<p>Cliquez sur le bouton pour lancer la fonction : <button onclick="add()">Lancer la fonction</button></p>
+
+</body>
+</html>
